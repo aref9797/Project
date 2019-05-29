@@ -1,0 +1,65 @@
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link href="../css/template.css" rel="stylesheet" type="text/css">
+
+    <link href="../css/CSS.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var xhttp=new XMLHttpRequest();
+            xhttp.onreadystatechange= function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myArr = JSON.parse(this.responseText);
+                    var r=0,s=0,a=myArr.length;
+                    for (var x=0;x<myArr.length;x++)
+                    {
+                        if (myArr[x].statuse==1)
+                            r++;
+                        else if (myArr[x].statuse==2)
+                            s++;
+                    }
+                    $("#allmassege").html(a);
+                    $("#onread").html(r);
+                    $("#onservice").html(s);
+                    $('.chart-num').each(function () {
+                        var $this = $(this);
+                        jQuery({ Counter: 0 }).animate({ Counter: $this.text() }, {
+                            duration: 1500,
+                            easing: 'swing',
+                            step: function () {
+                                $this.text(Math.ceil(this.Counter));
+                            }
+                        });
+                    });
+                }
+            };
+            xhttp.open("GET", "../problem/allProblem", true);
+            xhttp.send();
+        })
+    </script>
+</head>
+<body>
+<div class="row  background nopadding" style="height: 100%">
+    <div  class="col-md-3 full-height  nopadding  leftmenu">
+        <ul class="nav navbar-nav menu-list nopadding">
+
+            <li > <a class="menulink" href="login"> صفحه اصلی </a> </li>
+            <li > <a class="menulink" href="superadmin/addadmin">مدیریت کارشناسان</a> </li>
+            <li > <a class="menulink" href="superadmin/alluser">لیست کاربر ها</a> </li>
+            <li > <a class="menulink" href="superadmin/changepass">تغییر رمز</a> </li>
+            <li> <a class="menulink" href="logout">خروج</a> </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+@font-face {
+    font-family: Vazir;
+    src: url('http://fonts.codearena.ir/rastikerdar/vazir/vazir.eot');
+    src: url('http://fonts.codearena.ir/rastikerdar/vazir/vazir.eot?#iefix') format('embedded-opentype'),
+    url('http://fonts.codearena.ir/rastikerdar/vazir/vazir.woff') format('woff'),
+    url('http://fonts.codearena.ir/rastikerdar/vazir/vazir.ttf') format('truetype');
+    font-weight: normal;
+}
+@font-face {
+    font-family: Gandom;
+    src: url('http://fonts.codearena.ir/rastikerdar/gandom/gandom.eot');
+    src: url('http://fonts.codearena.ir/rastikerdar/gandom/gandom.eot?#iefix') format('embedded-opentype'),
+    url('http://fonts.codearena.ir/rastikerdar/gandom/gandom.woff') format('woff'),
+    url('http://fonts.codearena.ir/rastikerdar/gandom/gandom.ttf') format('truetype');
+    font-weight: normal;
+}
+body{
+    background-image: url("../img/back.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    direction: rtl;
+}
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+b.chart-head{
+    font-family: Gandom;
+    font-size: 14px;
+}
+div.background{
+    background-color: rgba(242, 242, 242,0.5);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+div.chart{
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+div.singin-box{
+    background-color: #fffff7;
+    height: 100%;
+
+}
+div#singin{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+div#singup{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+b.singin-header{
+    font-size: 25px;
+    font-family: Gandom;
+}
+input.inp{
+    background: transparent;
+    border: none;
+    border-bottom: 1px rgba(0,0,0,0.3) solid;
+    height: 30px;
+    font-family: Arial, serif;
+    font-size: 15px;
+    color: rgb(0,0,0);
+}
+input.inp:focus{
+    outline: none;
+}
+input.fo{
+    background: transparent;
+    outline: none !important;
+    color: #000000;
+}
+input.error{
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(160,38,49,0.5);
+}
+input.success{
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(54,120,31,0.5);
+}
+button.btn-size{
+    height: 40px;
+    width: 90px;
+    font-size: 15px;
+    font-family: Vazir;
+}
+b.info-box{
+    font-family: Vazir, serif;
+    font-size: 10px;
+}
+b.tiile{
+    font-size: 13px;
+    font-family: Gandom;
+}

@@ -1,21 +1,50 @@
 package com.bonabu.Project.Entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class enduser extends user{
+public class enduser extends user  implements Serializable {
 
-    private String name_family;
+    private String name;
+    private String family;
+    private Integer type;
 
-    public String getName_family() {
-        return name_family;
+
+    public String getFamily() {
+        return family;
     }
 
-    public void setName_family(String name_family) {
-        this.name_family = name_family;
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    @OneToMany(mappedBy = "enduser")
+    private List<Problem> problems;
+
+    public List<Problem> getProblems() {
+        return problems;
+    }
+
+    public void setProblems(List<Problem> problems) {
+        this.problems = problems;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

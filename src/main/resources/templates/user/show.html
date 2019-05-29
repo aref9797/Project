@@ -1,0 +1,172 @@
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link href="../css/template.css" rel="stylesheet" type="text/css">
+    <link href="../css/table-css.css" rel="stylesheet" type="text/css">
+
+    <link href="../css/CSS.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+       $(document).ready(function () {
+
+           var xhttp=new XMLHttpRequest();
+           xhttp.onreadystatechange=function () {
+               if (this.status=200&&this.readyState==4) {
+                   var mydata = JSON.parse(this.responseText),stat;
+                   $("#Title").attr({"value":mydata.title});
+                   $("#Desc").text(mydata.desc);
+                   // $("#Time").attr({"value":mydata.date});
+                   $("#Time").text(mydata.date);
+                   $("#AdminName").attr({"value":mydata.adminTitle});
+                   $("#Answer").text(mydata.answer.answer);
+                   $("#SolveTime").attr({"value":mydata.answer.time});
+                   if (mydata.statuse==1) {
+                       stat = "بررسی نشده";
+                       $("#Title").prop("disabled",false);
+                       $("#Desc").prop("disabled",false);
+                       $("#Answer_Time").hide();
+                       $("#Answer_Title").hide();
+
+                   }
+                   else if (mydata.statuse==2)
+                   {
+                       stat="درحال بررسی";
+                       $("#submitbtn").hide();
+
+                   }
+                   else {
+                       stat = "بررسی شده";
+                       $("#submitbtn").hide();
+                   }
+                   $("#Statuse").attr({"value":stat});
+               }
+           };
+           xhttp.open("GET","../problem/getselected",true);
+           xhttp.send();
+
+
+
+       });
+       function  deletefun() {
+           var xhttp=new XMLHttpRequest();
+           xhttp.onreadystatechange=function () {
+             if(this.readyState==4 && this.status==200)
+             {
+                 var myres=JSON.parse(this.responseText);
+                 if (myres.status==200)
+                 {
+                     alert("حذف شد");
+                     location.replace("allmassege");
+                 }
+             }
+           };
+           xhttp.open("GET","../problem/delete",true)
+           xhttp.send();
+       };
+    </script>
+</head>
+<body>
+    <div class="row  background nopadding" style="height: 100%">
+        <div  class="col-md-3 full-height  nopadding  leftmenu">
+            <ul class="nav navbar-nav menu-list nopadding">
+                <li class="first-li" > <a class="menulink " href="../login"> صفحه اصلی </a> </li>
+                <li > <a class="menulink" href="sendmassege"> ارسال پیام </a> </li>
+                <li > <a class="menulink" href="allmassege">پیگیری پیام ها</a> </li>
+                <li > <a class="menulink" href="changepass">تغییر رمز</a> </li>
+                <li> <a class="menulink" href="../logout">خروج</a> </li>
+            </ul>
+        </div>
+        <div class="col-md-9 container-template" style="overflow-y: scroll">
+            <div style="margin: 0px 100px">
+            <table style="height: auto;border-collapse: separate;border-spacing: 0px 10px">
+
+                <tr >
+                    <td><b>وضعیت</b></td>
+                    <td><div style="width: 30px"></div></td>
+                    <td><input  disabled style="width: 170px;height: 35px" id="Statuse" type="text"  class="form-control" ></td>
+                </tr>
+                <tr >
+                    <td style="height: 100%;display: block">
+                        <b style="float: top">پیام</b>
+                    </td>
+                    <td><div style="width: 30px"></div></td>
+                    <td>
+                        <textarea  disabled id="Desc" style="width: 300px" type="text" rows="4" class="form-control"></textarea>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="display: block">
+                        <b style="float: top">زمان</b>
+                    </td>
+                    <td><div style="width: 30px"></div></td>
+                    <td>
+                        <textarea style="width: 150px"  disabled id="Time" rows="2" type="text" class="form-control" aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b style="float: top">کارشناس</b>
+                    </td>
+                    <td><div style="width: 30px"></div></td>
+                    <td>
+                        <input style="width: 165px;height: 35px"  disabled id="AdminName" type="text" class="form-control" aria-label="Small"  aria-describedby="inputGroup-sizing-sm">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="display: block">
+                        <b style="float: top">پاسخ</b>
+                    </td>
+                    <td><div style="width: 30px"></div></td>
+                    <td>
+                        <textarea style="width: 300px" disabled  type="text" id="Answer" rows="5" class="form-control " aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <b style="float: top">زمان حل</b>
+                    </td>
+                    <td><div style="width: 30px"></div></td>
+                    <td>
+                        <input style="width: 150px;height: 35px" disabled  type="text" id="SolveTime"  class="form-control" aria-label="Small"  aria-describedby="inputGroup-sizing-sm">
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td >
+                    </td>
+                    <td><div style="width: 30px"></div></td>
+                    <td>
+                        <button style="margin-right: 150px" type="button" class="btn btn-danger btn-md">حذف</button>
+                    </td>
+                </tr>
+            </table>
+
+
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+
+                            <div class="modal-body text-right">
+                                <p>آیا از حذف مطمین هستید?</p>
+                            </div>
+                            <div class="modal-footer text-right">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">خیر</button>
+                                <button id="deletebtn" onclick="deletefun()" type="button" class="btn btn-default" data-dismiss="modal">بله</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

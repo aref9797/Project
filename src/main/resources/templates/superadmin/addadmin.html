@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link href="../css/template.css" rel="stylesheet" type="text/css">
+
+    <link href="../css/table-css.css" rel="stylesheet" type="text/css">
+
+
+    <link href="../css/CSS.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#submit").click(function(){
+                $.ajax({
+                    url: '../admin/add',
+                    dataType: 'json',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify( { "pass": $('#pass').val(),'email':$("#email").val(),"admintitle":$("#name").val() } ),
+                    processData: false,
+                    success: function( data, textStatus, jQxhr ){
+                        if (data.statuse==200)
+                        {
+                            alert("کاربر ثبت شد");
+                            $('#pass').val("");
+                            $("#email").val("");
+                            $("#name").val("");
+                            location.reload();
+                        }
+                    },
+                    error: function( jqXhr, textStatus, errorThrown ){
+                        console.log( errorThrown );
+                    }
+                });
+            });
+            var rowswlect,myArr;
+            var xhttp=new XMLHttpRequest();
+            xhttp.onreadystatechange= function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myArr = JSON.parse(this.responseText);
+                    var txt;
+                    for (var x=0;x<myArr.length;x++)
+                    {
+                        txt+="<tr>";
+                        txt+="<td id='index' class='text-center'>"+(x+1)+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].admintitle+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].email+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].allmassege+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].addnoreadmassege+"</td>";
+                        txt+="</tr>";
+                    }
+                    $("#data tbody").append(txt);
+                }
+            };
+            xhttp.open("GET", "../admin/allList", true);
+            xhttp.send();
+        });
+    </script>
+
+</head>
+
+<body>
+<div class="row  background nopadding" style="height: 100%">
+    <div  class="col-md-3 full-height  nopadding  leftmenu">
+        <ul class="nav navbar-nav menu-list nopadding">
+
+            <li > <a class="menulink" href="../login"> صفحه اصلی </a> </li>
+            <li > <a class="menulink" href="addadmin">مدیریت کارشناسان</a> </li>
+            <li > <a class="menulink" href="alluser">لیست کاربر ها</a> </li>
+            <li > <a class="menulink" href="changepass">تغییر رمز</a> </li>
+            <li> <a class="menulink" href="../logout">خروج</a> </li>
+        </ul>
+    </div>
+
+    <div class="col-md-9 container-template" style="overflow-y: scroll">
+        <div class="container-fluid" style="height: 100%"  >
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div style="height: auto">
+                        <br>
+                            <div class="row">
+                                <div class="col-md-2"><b>کارشناس </b></div>
+                                <div class="col-md-7"><input  type="text" id="name" class="form-control inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm" ></div>
+                            </div>
+                        <br>
+                            <div class="row">
+                                <div class="col-md-2"><b>ایمیل</b></div>
+                                <div class="col-md-7"><input  type="text" id="email"  class="form-control inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm" ></div>
+                            </div>
+                        <br>
+                            <div class="row">
+                                <div class="col-md-2"><b>رمز عبور</b></div>
+                                <div class="col-md-7"><input  type="text"  id="pass" class="form-control inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm" ></div>
+                            </div>
+                       <br>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <input type="button" id="submit" class="btn btn-danger  font-btn" style="height: 40px" value="ثبت">
+                                </div>
+
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            <br/><br/>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10 table-responsiv ">
+                    <table id="data" class="table show ">
+                        <thead>
+                        <tr class="head">
+                            <th style="width: 5%">
+                                ردیف
+                            </th>
+                            <th>
+                                کارشناس
+                            </th>
+                            <th>
+                                ایمیل
+                            </th>
+                            <th style="width: 15%">
+                                کل پیام ها
+                            </th>
+                            <th style="width: 20%">
+                                پیام خوانده نشده
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

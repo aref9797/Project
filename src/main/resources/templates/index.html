@@ -1,0 +1,319 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    |<script src="js/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/jalali-moment/dist/jalali-moment.browser.js"></script>
+
+    <link href="css/landing.css" type="text/css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <!--<script src="../staticjs/sing_up.js"></script>-->
+    <!--<script src="js/sing_in.js"></script>-->
+    <script type="text/javascript" src="//gitcdn.link/repo/Lwangaman/jQuery-Clock-Plugin/master/jqClock.min.js"></script>
+
+    <script src="js/sing_up.js"></script>
+    <script src="js/sing_in.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            customtimestamp = parseInt($("#jqclock").data("time"));
+            $("#jqclock-local").clock({"timeFormat":"G:i:s ","calendar":false});
+            $("#show-date").text(moment().locale('fa').format('YYYY/M/D'));
+            var r,g,y;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myArr = JSON.parse(this.responseText);
+                    r=myArr.selfnnread;
+                    g=myArr.allmassege;
+                    y=myArr.selfmassege;
+
+                    lodinfo(r,g,y);
+                }
+            };
+            xhttp.open("GET", "problem/index_chart", true);
+            xhttp.send();
+
+
+            $("#singup").hide();
+            $("#rig").click(function () {
+                $("#info").hide(1000,"swing",function () {
+
+                    $("#singin").hide(1000,"swing",function () {
+
+                        $("#info").show(1000,"swing",function () {
+
+                            $("#singup").show(1000,"swing");
+                        });
+                    });
+                });
+            });
+            $("#singbtn").click(function () {
+                $("#singup").hide(1000,"swing",function () {
+                    $("#info").hide(1000,"swing",function () {
+                        $("#singin").show(1000,"swing",function () {
+                            $("#info").show(1000);
+                        });
+                    });
+
+                });
+            });
+            
+            $("#singup_mellicode").keyup(function () {
+
+                if ($("#singup_mellicode").val()=="")
+                {
+                    $("#singup_mellicode").removeClass("error");
+                    $("#singup_mellicode").removeClass("success");
+                    $("#singup_mellicode").addClass("inp");
+                    $("#singup_name").val("");
+                    $("#singup_family").val("");
+                    $("#singup_type").val("");
+                }
+                else {
+                    $.post("AAA/chekname", {code: $("#singup_mellicode").val()}, function(data,status){
+
+                        if (data.name!="")
+                        {
+                            $("#singup_mellicode").removeClass("error");
+                            $("#singup_mellicode").addClass("success");
+                            $("#singup_name").val("نام :  "+data.name);
+                            $("#singup_family").val("نام خانوداگی :  "+data.family);
+                            $("#singup_type").val("نوع کاربر :  "+data.type);
+                        }
+                        else {
+                            $("#singup_name").val("");
+                            $("#singup_family").val("");
+                            $("#singup_type").val("");
+                            $("#singup_mellicode").removeClass("success");
+                            $("#singup_mellicode").addClass("error");
+                        }
+                    });
+                }
+
+
+            });
+
+        });
+        function lodinfo(r, g, y) {
+                var a=r+g+y;
+                $(".bg-success").animate({width: (g*100/a)+"%"},{
+                    duration: 3000,
+                    easing: "swing"
+                },function () {
+                    $("b#success_b").text(g+"از"+a);
+                });
+                $(".bg-warning").animate({width: (y*100/a)+"%"},{
+                    duration: 3000,
+                    easing: "swing"
+                },function () {
+                    $("b#warning_b").text(y+"از"+a);
+                });
+                $(".bg-danger").animate({width: (r*100/a)+"%"},{
+                    duration: 3000,
+                    easing: "swing"
+                },function () {
+                    $("b#danger_b").text(r+"از"+a);
+                });
+        }
+    </script>
+</head>
+<body>
+    <div class=" nopadding" >
+        <div class="row nopadding" style="height: 10%"></div>
+        <div class="row nopadding" style="height: 78%">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 full-height background">
+                <div class="row full-height" style="height: 100%">
+                    <div id="singin" class="col-md-4 full-height text-center singin-box">
+                        <table>
+                            <br>
+                            <br>
+                            <tr>
+                                <b class="singin-header">ورود</b>
+
+                            </tr>
+                            <br>
+                            <br>
+                            <br>
+                            <tr>
+                                <div class="row" style="height: auto">
+                                    <div class="col-md-2"></div>
+                                    <div  id="singin-error" class="col-md-8">
+                                    </div>
+                                </div>
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <input class="inp" placeholder="ایمیل" id="email_sing-in"  type="text">
+
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <input class="inp  pass" placeholder="رمز عبور" id="pass_sing-in"  type="password">
+                            </tr>
+                            <br>
+
+                            <br>
+                            <br>
+                            <tr>
+                                <button id="sing_in_btn" type="button" class="btn btn-info btn-size">ورود</button>
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <b>هنوز عضو سامانه نیستید؟</b>
+                                <a href="#" id="rig">عضویت</a>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="info" class="col-md-8 nopadding">
+                        <div class="row" style="height: 40%"></div>
+                        <div style="height: 55%" class="row nopadding">
+                            <div class="col-md-12  " >
+                                <table style="width: 100%">
+                                    <tr>
+                                        <div class="row" style="padding-right: 10px">
+                                            <div class="col-md-3 nopadding text-right">
+
+                                                <b class="tiile">درخواست های بررسی نشده</b>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="progress md-progress" style="margin-top: 5px;background-color: rgba(245,245,245,0.25)">
+                                                    <div  class="progress-bar bg-danger" role="progressbar" style=""  aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <b id="danger_b" class="tiile"></b>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                        <div class="row" style="padding-right: 10px">
+                                            <div class="col-md-3 nopadding text-right">
+
+                                                <b class="tiile">درخواست های در حال بررسی</b>
+                                            </div>
+                                            <div class="col-md-7">
+
+                                                <div class="progress md-progress" style="margin-top: 5px;background-color: rgba(245,245,245,0.25)">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style=""  aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <b id="warning_b" class="tiile"></b>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                        <div class="row" style="padding-right: 10px">
+                                            <div class="col-md-3 nopadding text-right">
+
+                                                <b class="tiile">درخواست های بررسی شده</b>
+                                            </div>
+                                            <div class="col-md-7">
+
+                                                <div class="progress md-progress" style="margin-top: 5px;background-color: rgba(245,245,245,0.25)">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <b id="success_b" class="tiile"></b>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 5%">
+                            <div class="col-md-12 text-center"  style="font-size: 16px;font-family: Vazir">
+
+                                <b>تاریخ</b>
+                                <b id="show-date"></b>
+                                <b>ساعت</b>
+                                <b  id="jqclock-local" class="jqclock"></b>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="singup" class="col-md-4 full-height text-center singin-box">
+                        <table>
+                            <br>
+                            <br>
+                            <tr>
+                                <b class="singin-header">ثبت نام</b>
+
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <div class="row" style="height: auto">>
+                                    <div class="col-md-2"></div>
+                                    <div  id="singup-error" class="col-md-8">
+                                    </div>
+                                </div>
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <input  class="inp" placeholder="کد ملی" id="singup_mellicode"  type="text">
+
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <input disabled style="background-color: rgba(215,215,215,0.5);color: #3c3c3a;" class="inp" placeholder="نام" id="singup_name" type="text">
+
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <input disabled style="background-color: rgba(215,215,215,0.5);color: #3c3c3a;" class="inp" placeholder="نام خانوداگی" id="singup_family"  type="text">
+
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <input disabled style="background-color: rgba(215,215,215,0.5);color: #3c3c3a;" class="inp" placeholder="نوع کاربر" id="singup_type"  type="text">
+
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <input class="inp" placeholder="ایمیل" id="singup_email"  type="text">
+
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <input class="inp" placeholder="رمز عبور" id="singup_pass"  type="password">
+                            </tr>
+                            <br>
+                            <br>
+                            <br>
+                            <tr>
+                                <button id="sing_up_btn" type="button" class="btn btn-info btn-size">ثبت نام</button>
+                            </tr>
+                            <br>
+                            <br>
+                            <tr>
+                                <b>قبلا ثبت نام کرده اید؟</b>
+                                <a href="#" id="singbtn">ورود</a>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+</html>

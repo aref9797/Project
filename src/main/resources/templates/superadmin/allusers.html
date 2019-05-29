@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link href="../css/table-css.css" rel="stylesheet" type="text/css">
+    <link href="../css/template.css" rel="stylesheet" type="text/css">
+
+    <link href="../css/CSS.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var rowswlect,myArr;
+            var xhttp=new XMLHttpRequest();
+            xhttp.onreadystatechange= function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myArr = JSON.parse(this.responseText);
+                    var txt;
+                    for (var x=0;x<myArr.length;x++)
+                    {
+
+                        var stat;
+                        txt+="<tr>";
+                        txt+="<td id='index' class='text-center'>"+(x+1)+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].name+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].email+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].allmassege+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].allnoreadmassege+"</td>";
+
+                        txt+="</tr>";
+                    }
+                    $("tbody").append(txt);
+                }
+            };
+            xhttp.open("GET", "../enduser/all", true);
+            xhttp.send();
+        });
+    </script>
+
+</head>
+
+<body>
+<div class="row  background nopadding" style="height: 100%">
+    <div  class="col-md-3 full-height  nopadding  leftmenu">
+        <ul class="nav navbar-nav menu-list nopadding">
+
+            <li > <a class="menulink" href="../login"> صفحه اصلی </a> </li>
+            <li > <a class="menulink" href="addadmin">مدیریت کارشناسان</a> </li>
+            <li > <a class="menulink" href="alluser">لیست کاربر ها</a> </li>
+            <li > <a class="menulink" href="changepass">تغییر رمز</a> </li>
+            <li> <a class="menulink" href="../logout">خروج</a> </li>
+        </ul>
+    </div>
+
+    <div class="col-md-9 container-template" >
+        <div class="container-fluid" >
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10 table-responsiv nopadding" style="height: 100%;overflow-y: scroll">
+                    <table class="table show ">
+                        <thead>
+                        <tr class="head">
+                            <th style="width: 5%">
+                                ردیف
+                            </th>
+                            <th>
+                                نام و نام خانوداگی
+                            </th>
+                            <th >
+                                ایمیل
+                            </th>
+                            <th >
+                                کل پیام ها
+                            </th>
+                            <th >
+                                پیام های جواب داده نشده
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

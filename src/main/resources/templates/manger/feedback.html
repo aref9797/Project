@@ -1,0 +1,170 @@
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link href="../css/template.css" rel="stylesheet" type="text/css">
+
+    <link href="../css/CSS.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var mydata;
+            var xhttp=new XMLHttpRequest();
+            xhttp.onreadystatechange=function () {
+                if (this.status=200&&this.readyState==4) {
+                    mydata = JSON.parse(this.responseText);
+                    var stat="";
+                    $("#input-title").attr({"value":mydata.title});
+                    $("#input-desc").text(mydata.desc);
+                    $("#input-date").text(mydata.date);
+                    $("#input-name").attr({"value":mydata.email});
+                    $("#input-answer").text(mydata.answer.answer);
+                    $("#input-amswerTime").attr({"value":mydata.answer.time});
+                    if (mydata.statuse==1) {
+                        stat = "بررسی نشده";
+                        $("#input-amswerTime").prop("disabled",false);
+                        $("#input-answer").prop("disabled",false);
+                        $("#okbtn").hide();
+
+                    }
+                    else if (mydata.statuse==2)
+                    {
+                        $("#input-amswerTime").prop("disabled",false);
+                        $("#input-answer").prop("disabled",false);
+                        stat="درحال بررسی";
+
+                    }
+                    else {
+                        stat = "بررسی شده";
+                        $("#submitbtn").hide();
+                        $("#okbtn").hide();
+                    }
+                    $("#input-statuse").attr({"value":stat});
+                }
+            };
+            xhttp.open("GET","../problem/getProblemSelected",true);
+            xhttp.send();
+            $("#submitbtn").click(function () {
+                mydata.answer.answer=$("#input-answer").val();
+                mydata.answer.time=$("#input-amswerTime").val();
+                $.ajax({
+                    url: '../problem/edit',
+                    dataType: 'json',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify( mydata ),
+                    processData: false,
+                    success: function( data, textStatus, jQxhr ){
+                        if (data.statuse==200)
+                        {
+                            location.replace("feedback");
+                        }
+                        else if(data.statuse==403)
+                        {
+                            alert("فیلد ها خالی است");
+                        }
+                    },
+                    error: function( jqXhr, textStatus, errorThrown ){
+                        console.log( errorThrown );
+                    }
+                });
+            });
+            $("#okbtn").click(function () {
+                $.ajax({
+                    url: '../problem/chekok',
+                    dataType: 'json',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify( mydata ),
+                    processData: false,
+                    success: function( data, textStatus, jQxhr ){
+                        if (data.statuse==200)
+                        {
+                            location.replace("feedback");
+                        }
+                    },
+                    error: function( jqXhr, textStatus, errorThrown ){
+                        console.log( errorThrown );
+                    }
+                });
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+<div class="row  background nopadding" style="height: 100%">
+    <div  class="col-md-3 full-height  nopadding  leftmenu">
+        <ul class="nav navbar-nav menu-list nopadding">
+            <li > <a class="menulink" href="../login">صفحه اصلی</a> </li>
+            <li > <a class="menulink" href="allmassege"> تمام پیام ها</a> </li>
+            <li > <a class="menulink" href="allnoreadmassege"> پیام ها جواب داده نشده</a> </li>
+            <li > <a class="menulink" href="changepass">تغییر رمز</a> </li>
+            <li> <a class="menulink" href="../logout">خروج</a> </li>
+        </ul>
+    </div>
+    <div class="col-md-9 container-template" style="overflow-y: scroll">
+        <div class="container-fluid" style="height: 100%"  >
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 row">
+
+                        <br>
+                                <div class="row">
+                                    <div class="col-md-2"><b>وضعیت</b></div>
+                                    <div class="col-md-4"><input disabled  type="text" rows="5" id="input-statuse" class="form-control inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></div>
+                                </div>
+                        <br>
+                                <div class="row">
+                                    <div class="col-md-2"><b>فرستنده</b></div>
+                                    <div class="col-md-7"><input  type="text" id="input-name" class="form-control inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm" disabled></div>
+                                </div>
+                        <br>
+                                <div class="row">
+                                    <div class="col-md-2"><b>موضوع</b></div>
+                                    <div class="col-md-7"><input  type="text" id="input-title" class="form-control inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm" disabled></div>
+                                </div>
+                        <br>
+                                <div class="row">
+                                    <div class="col-md-2"><b>پیام</b></div>
+                                    <div class="col-md-10"><textarea disabled type="text" id="input-desc" rows="5" class="form-control inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></textarea></div>
+                                </div>
+                        <br>
+                                <div class="row">
+                                    <div class="col-md-2"><b>زمان</b></div>
+                                    <div class="col-md-5"><textarea  disabled type="text" id="input-date" rows="2" class="form-control text-center inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></textarea></div>
+                                </div>
+                        <br>
+                                <div class="row">
+                                    <div class="col-md-2"><b>پاسخ</b></div>
+                                    <div class="col-md-10"><textarea disabled  type="text" rows="5" id="input-answer" class="form-control inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></textarea></div>
+                                </div>
+                        <br>
+                                <div class="row">
+                                    <div class="col-md-2"><b>زمان حل </b></div>
+                                    <div class="col-md-3"><input disabled  type="text" id="input-amswerTime" class="form-control text-center inp" aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></div>
+                                </div>
+                        <br>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button  id="submitbtn" type="button" class="btn btn-info  font-btn" style="height: 40px">ثبت</button>
+                                        <button  id="okbtn"  type="button" class="btn btn-success  font-btn" style="height: 40px">انجام شد</button>
+                                    </div>
+                                </div>
+
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

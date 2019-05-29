@@ -1,25 +1,42 @@
 package com.bonabu.Project.Entity;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
+import java.util.function.Function;
 
 @Entity
-public class user {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class user implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE,generator = "user_id_seq")
-    @SequenceGenerator(name="user_id_seq", sequenceName = "user_id_seq", allocationSize=1)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique=true, nullable=false,length = 10)
-    private String usename;
 
-    @Column(unique=true, nullable=false,length = 20)
+    @Column(unique=true, nullable=false,length = 60)
     private String email;
 
-    @Column(unique=true, nullable=false)
+    @Column(nullable=false)
     private String password;
 
+    @JsonIgnore
+    @Column(name = "role")
+    private Integer role;
+
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
@@ -29,13 +46,6 @@ public class user {
         this.id = id;
     }
 
-    public String getUsename() {
-        return usename;
-    }
-
-    public void setUsename(String usename) {
-        this.usename = usename;
-    }
 
     public String getEmail() {
         return email;

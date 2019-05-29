@@ -1,0 +1,168 @@
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link href="../css/template.css" rel="stylesheet" type="text/css">
+
+    <link href="../css/CSS.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            var adminArr;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myArr = JSON.parse(this.responseText);
+                        adminArr=myArr;
+                        var txt1="<option>";
+                        var txt2="</option>";
+                        var i,txt;
+                        for (i=0;i<myArr.length;i++)
+                            txt+=txt1+myArr[i].admintitle+txt2;
+                        $("#myselect").html(txt);
+                    }
+                };
+                xhttp.open("GET", "../admin/all", true);
+                xhttp.send();
+                
+                $("#submit").click(function () {
+
+
+                    $("#title").removeClass("errorborder");
+                    $("#desc").removeClass("errorborder");
+                    if($("#title").val()=="")
+                    {
+                        $("#title").addClass("errorborder");
+                        $("#dialog-box").html("");
+                        $("#dialog-box").append("<div class=\"alert alert-danger text-right\">"+
+                            "                                        <b class='info-box'>فیلد های قرمز نباید خالی باشد</b>\n" +
+                            "                                    </div>");
+                    }
+                    else if($("#desc").val()=="")
+                    {
+                        $("#desc").addClass("errorborder");
+                        $("#dialog-box").html("");
+                        $("#dialog-box").append("<div class=\"alert alert-danger text-right\">\n" +
+                            "                                        <b class='info-box'>فیلد های قرمز نباید خالی باشد</b>\n" +
+                            "                                    </div>");
+                    }
+                    else
+                    {
+                        var email="";
+                        for (var x=0;x<adminArr.length;x++) {
+                            var r=JSON.stringify(adminArr[x].admintitle);
+
+
+                            var s=JSON.stringify($('#myselect').val());
+                            if (r == s) {
+                                email = adminArr[x].email;
+                            }
+                        }
+                        $.ajax({
+                            url: '../problem/add',
+                            dataType: 'json',
+                            type: 'post',
+                            contentType: 'application/json',
+                            data: JSON.stringify( { "admin": email,"Title": $('#title').val(),"desc": $('#desc').val() } ),
+                            processData: false,
+                            success: function( data, textStatus, jQxhr ){
+                                if (data.statuse==200)
+                                {
+                                    $("#dialog-box").html("");
+                                    $("#dialog-box").append("<div class=\"alert alert-success text-right\">\n" +
+                                        "                                        <b class='info-box'>با موفقیت ثبت شد</b>\n" +
+                                        "                                    </div>");
+                                    $("input").val("");
+                                    $("textarea").html("");
+                                }
+                            },
+                            error: function( jqXhr, textStatus, errorThrown ){
+                                console.log( errorThrown );
+                            }
+                        });
+                    }
+
+                });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div class="row  background nopadding" style="height: 100%">
+        <div  class="col-md-3 full-height  nopadding  leftmenu">
+            <ul class="nav navbar-nav menu-list nopadding">
+                <li class="first-li" > <a class="menulink " href="../login"> صفحه اصلی </a> </li>
+                <li > <a class="menulink" href="sendmassege"> ارسال پیام </a> </li>
+                <li > <a class="menulink" href="allmassege">پیگیری پیام ها</a> </li>
+                <li > <a class="menulink" href="changepass">تغییر رمز</a> </li>
+                <li> <a class="menulink" href="../logout">خروج</a> </li>
+            </ul>
+        </div>
+        <div class="col-md-9 container-template" >
+            <div style="height: 100%;padding: 0px 100px;">
+                <div class="row">
+                        <div  id="dialog-box" class="col-md-12">
+                        </div>
+                </div>
+                <table style="border-collapse: separate;border-spacing: 0 10px">
+                        <tr>
+                        <td>
+                            <b class="Tanha" style="font-size: 15px"> موضوع :</b>
+                        </td>
+                        <td>
+                            <div style="width: 20px"></div>
+                        </td>
+                        <td>
+                            <input  id="title"  style="opacity: 0.85;width: 200px;height: 35px" class="form-control" type="text" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b class="Tanha" style="font-size: 15px"> پیام :</b>
+                        </td>
+                        <td>
+                            <div style="width: 20px"></div>
+                        </td>
+                        <td>
+                            <textarea id="desc" style="opacity: 0.85;width: 300px" rows="9" class="form-control" type="text" ></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b class="Tanha" style="font-size: 15px"> کارشناس مربوط :</b>
+                        </td>
+                        <td>
+                            <div style="width: 20px"></div>
+                        </td>
+                        <td>
+                            <select style="opacity: 0.85;;direction: rtl;width: 150px" class="form-control" id="myselect">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <div style="width: 20px"></div>
+                        </td>
+                        <td>
+                            <button id="submit" style="margin-right: 50px" type="button" class="btn btn-info btn-md">ثبت</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

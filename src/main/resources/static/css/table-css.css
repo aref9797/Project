@@ -1,0 +1,33 @@
+table.show{
+
+    border-radius: 10px;
+    background-color: white;
+    padding: 0px 10px;
+
+}
+tr{
+
+    height: 40px;
+}
+
+thead tr{
+    background: #c64074;
+    color: #dcdbd5 ;
+    text-align: center;
+
+}
+tbody tr{
+    border-collapse: separate;
+    border-spacing: 50px 0px;
+}
+th{
+
+}
+th:first-child{
+
+    border-top-right-radius:10px ;
+}
+table.show th:last-child{
+
+    border-top-left-radius:10px ;
+}

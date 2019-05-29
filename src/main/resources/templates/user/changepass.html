@@ -1,0 +1,115 @@
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link href="../css/template.css" rel="stylesheet" type="text/css">
+
+    <link href="../css/CSS.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>تغییر رمز عبور</title>
+    <script>
+        $(document).ready(function(){
+            $("#change").click(function(){
+                if ($("#pass").val()=="")
+                {
+                    $("#dialog-box").html("");
+                    $("#dialog-box").append("<div class=\"col-md-12\">\n" +
+                        "                                    <div class=\"alert alert-danger text-right\">\n" +
+                        "                                        <b class='info-box'>فیلد رمز خالی است</b>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>");
+                }
+                else if ($("#pass").val()==$("#repass").val())
+                {
+                    $.ajax({
+                        url: '../AAA/changepass',
+                        dataType: 'json',
+                        type: 'post',
+                        contentType: 'application/json',
+                        data: JSON.stringify( { "pass": $('#pass').val(),'email':"" } ),
+                        processData: false,
+                        success: function( data, textStatus, jQxhr ){
+                            if (data.statuse==200)
+                            {
+                                $("#dialog-box").html("");
+                                $("#dialog-box").append("<div class=\"col-md-12\">\n" +
+                                    "                                    <div class=\"alert alert-success text-right\">\n" +
+                                    "                                        <b class='info-box'>رمز عبور با موفقیت عوض شد</b>\n" +
+                                    "                                    </div>\n" +
+                                    "                                </div>");
+                                $("input").val("");
+                            }
+                        },
+                        error: function( jqXhr, textStatus, errorThrown ){
+                            console.log( errorThrown );
+                        }
+                    });
+                }
+                else
+                {
+
+                    $("#dialog-box").html("");
+                    $("#dialog-box").append("<div class=\"col-md-12\">\n" +
+                        "                                    <div class=\"alert alert-danger text-right\">\n" +
+                        "                                        <b class='info-box'>رمز عبور وارد شده یکسان نیست</b>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>");
+
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="row  background nopadding" style="height: 100%">
+        <div  class="col-md-3 full-height  nopadding  leftmenu">
+            <ul class="nav navbar-nav menu-list nopadding">
+                <li class="first-li" > <a class="menulink " href="../login"> صفحه اصلی </a> </li>
+                <li > <a class="menulink" href="sendmassege"> ارسال پیام </a> </li>
+                <li > <a class="menulink" href="allmassege">پیگیری پیام ها</a> </li>
+                <li > <a class="menulink" href="changepass">تغییر رمز</a> </li>
+                <li> <a class="menulink" href="../logout">خروج</a> </li>
+            </ul>
+        </div>
+        <div class="col-md-9 container-template" >
+            <div style="height: 100%;padding: 0px 150px;">
+                <table>
+                    <tr>
+                        <div  id="dialog-box" class="row">
+                        </div>
+                    </tr>
+                    </br>
+                    <tr>
+                        <div class="row">
+                            <div class="col-md-3"><b>رمز جدید</b></div>
+                            <div class="col-md-5"><input type="password" class="form-control inp" id="pass" aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></div>
+                        </div>
+                    </tr>
+                    </br>
+                    <tr >
+                        <div class="row">
+                            <div class="col-md-3"><b> تکرار رمز جدید</b></div>
+                            <div class="col-md-5"><input type="password" class="form-control inp" id="repass" aria-label="Small"  aria-describedby="inputGroup-sizing-sm"></div>
+                        </div>
+                    </tr>
+                    </br>
+                    <tr >
+                        <div class="row">
+                            <div class="col-md-11 text-center">
+
+                                <button class="btn btn-danger  font-btn" id="change" style="height: 40px" > ثبت</button>
+                            </div>
+
+                        </div>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
