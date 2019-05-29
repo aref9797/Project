@@ -21,7 +21,11 @@ tbody tr{
     border-spacing: 50px 0px;
 }
 th{
+    background: #c64074;
+    color: #dcdbd5 ;
+    text-align: center;
 
+    position: sticky; top: 0;
 }
 th:first-child{
 

@@ -9,7 +9,6 @@
     <link href="../css/table-css.css" rel="stylesheet" type="text/css">
     <link href="../css/template.css" rel="stylesheet" type="text/css">
 
-    <link href="../css/CSS.css" rel="stylesheet" type="text/css">
     <link href="../css/fonts.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
@@ -27,6 +26,8 @@
                         txt+="<tr>";
                         txt+="<td id='index' class='text-center'>"+(x+1)+"</td>";
                         txt+="<td class='text-center'>"+myArr[x].name+"</td>";
+                        txt+="<td class='text-center'>"+myArr[x].family+"</td>";
+                        txt+="<td class='type text-center'>"+myArr[x].type+"</td>";
                         txt+="<td class='text-center'>"+myArr[x].email+"</td>";
                         txt+="<td class='text-center'>"+myArr[x].allmassege+"</td>";
                         txt+="<td class='text-center'>"+myArr[x].allnoreadmassege+"</td>";
@@ -40,7 +41,11 @@
             xhttp.send();
         });
     </script>
-
+    <style>
+        th{
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
@@ -59,33 +64,52 @@
     <div class="col-md-9 container-template" >
         <div class="container-fluid" >
             <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10 table-responsiv nopadding" style="height: 100%;overflow-y: scroll">
-                    <table class="table show ">
+                <div class="col-md-12 table-responsiv nopadding" style="height: 100%;overflow-y: scroll">
+                    <div >
+                    <table class="table show " >
                         <thead>
                         <tr class="head">
-                            <th style="width: 5%">
+                            <th  style="width: 5%">
                                 ردیف
                             </th>
+                            <th style="width: 16%">
+                                نام
+                            </th >
                             <th>
-                                نام و نام خانوداگی
+                                نام خانوداگی
                             </th>
-                            <th >
+                            <th style="width: 15%">
+                                نوع کاربر
+                            </th>
+                            <th style="width: 20%" >
                                 ایمیل
                             </th>
-                            <th >
+                            <th style="width: 12%;padding: .75rem 6px;" >
                                 کل پیام ها
                             </th>
-                            <th >
-                                پیام های جواب داده نشده
+                            <th style="width: 15%;padding: .75rem 0px;">
+                                جواب داده نشده
                             </th>
 
                         </tr>
                         </thead>
                         <tbody>
+                        <tbody>
 
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">دانشجو</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
+                        <tr><td id="" class="text-center">1</td><td class="text-center">ccc</td><td class="text-center">aref</td><td style="padding: .75rem 0px" class=" text-center">هیت علمی</td><td class="text-center">ccc</td><td class="text-center">0</td><td class="text-center">0</td></tr></tbody>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

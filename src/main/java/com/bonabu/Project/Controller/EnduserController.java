@@ -9,6 +9,7 @@ import com.bonabu.Project.Service.ServiceInterfaces.AdminService;
 import com.bonabu.Project.Service.ServiceInterfaces.EnduserService;
 import com.bonabu.Project.Service.ServiceInterfaces.ProblemService;
 import com.bonabu.Project.Service.ServiceInterfaces.UserService;
+import com.bonabu.Project.common.EnduserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,7 +80,9 @@ public class EnduserController {
                 {
                     UserModel um=new UserModel();
                     um.setName(x.getName());
-                    um.setEmail(x.getName());
+                    um.setEmail(x.getEmail());
+                    um.setFamily(x.getFamily());
+                    um.setType(EnduserType.TypeToSring(x.getType()));
                     um.setAllmassege(x.getProblems().size());
                     um.setAllnoreadmassege(enduserUC.getNoRead(x));
                     usmli.add(um);
